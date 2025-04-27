@@ -15,11 +15,16 @@ import org.springframework.shell.standard.ShellOption;
 @ShellComponent(value = "Mes commandes de messagerie")
 public class MyShellCommand {
 
+
 //cette ligne ici pour demo qu'il est possible de mettre en place 
 // une value dynamique.
 //@Value("${application.topicin}")
 //private String TOPICIN;
-
+    
+//spring.kafka.consumer.group-id
+@Value("${spring.kafka.consumer.group-id}")
+private String groupid;
+    
 //instanciation du service Kafka
 @Autowired
 private KafkaTemplate<String, String> kafkaTemplate;
@@ -38,7 +43,15 @@ private String connection;
 
 //login & sout
 private static final Logger logger = LoggerFactory.getLogger(MyShellCommand.class);
-    
+
+    public MyShellCommand() {
+        //int ale=(int)(Math.random()*99998)+1;
+        //groupid=groupid+"_"+ale;
+        
+        //logger.error("Le grouId de ce client est : "+ groupid);
+    }
+
+
     /******************************
      * whoami, donne le nom du client
      ******************************/
@@ -116,8 +129,10 @@ private static final Logger logger = LoggerFactory.getLogger(MyShellCommand.clas
      * @param message 
      *********************************/
     @KafkaListener(topics = "${application.topicin}")
+    //@KafkaListener(topics = "${application.topicin}",groupId ="#{__listener.groupid}")
     //@KafkaListener(topics="#{__listener.TOPICIN}")
     public void consume(String message) {
+
         if (extract_TO(message).compareToIgnoreCase(MONNOM.trim())==0) //si c'est bien pour moi !
         {
             logger.error(String.format("#### -> De la part de %s : Message -> %s",extract_FROM(message), extract_MSG(message)));
