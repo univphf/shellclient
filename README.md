@@ -1,13 +1,10 @@
-﻿
 **CLI SHELL MESSAGERIE**
-
 
 **Qu’est ce que c’est ?**
 
 Le Shell « Messagerie » est un outil basé sur un développement en « SpringBoot Shell » qui permet au travers d’un code source simple de proposer une interface CLI de messagerie basé sur Apache Kafka en mode texte idéale pour appréhender un bus à messages comme Kafka.
 
 Code source à cet emplacement :
-
 <https://github.com/univphf/shellclient.git>
 
 Cette application messagerie permet de se connecter au bus M-O-M Apache Kafka au travers de 4 topics ;
@@ -21,11 +18,10 @@ Ces topics doivent être en auto-création au niveau de votre broker Kafka (voir
 
 **Démarrage du client Shell**
 
-$> java -jar shellClient-0.0.1.jar => permet de lancer le client avec ses paramètres par défaut.
+**$> java -jar shellClient-0.0.1.jar** => permet de lancer le client avec ses paramètres par défaut.
 
 Les paramètres par défaut sont :
-
-```
+```ini
 #options du shell
 #pas de scripting possible
 spring.shell.script.enabled=false
@@ -69,17 +65,16 @@ log4j.appender.stdout.layout.ConversionPattern=%d{ISO8601} %-5p [%t] %c: %m%n
 
 Vous pouvez exécuter ce client avec des paramètres différents en les passant au travers de variables d’environnement. Il faut pour cela reprendre un ou plusieurs paramètres de ce fichier, remplacer les caractères spéciaux par « \_ », vous pouvez également si nécessaire ajouter d’autres paramètres permettant d’ajuster Kafka consumer ou producer ou SpringBoot etc...
 
-Passage de paramètres par variable d’environnement :
+<u>Passage de paramètres par variable d’environnement :</u>
 
-Exemple pour modifier uniquement le paramètre « application.monnom »  :
+Exemple pour modifier uniquement le paramètre « application.monnom » 
 
 **//remplacer le . Par \_ & - par \_**
-
+```
 $> export spring\_kafka\_consumer\_group\_id=Ma\_Messagerie
-
 $> export application\_monnom=ClientB
-
 $> java -jar shellClient-0.0.1.jar
+```
 
 Lors de cette exécution seul les paramètres « application.monnom » et « spring.kafka.consume.group-id » sont modifié, les autres paramètres gardent leurs valeurs par défaut.
 
@@ -123,7 +118,7 @@ Pour connaître les paramètres d’une commande il suffit de taper le nom de la
 
 ![](img_doc/b896b996-6081-4197-a6f7-fb687787c48b.004.png)
 
-**Le format des messages envoyés sont** :
+**<u>Le format des messages envoyés sont :</u>**
 
 Pour la messagerie inter-clients
 
@@ -154,7 +149,7 @@ Envoi du message technique :
 DISCONNECT:ClientA
 
 
-Puis je modifier ce client ?
+**Puis je modifier ce client ?**
 
 Oui, le code source est libre et vous pouvez le modifier a votre convenance pour l’adapter à votre projet de TP, les dépendances sont basé sur Maven, consultez le fichier pom.xml avant toute choses.
 
